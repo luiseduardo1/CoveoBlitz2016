@@ -38,7 +38,7 @@ class TeamMember:
 
         Raises:
             TypeError: If any of the arguments do not conform to their specified types
-            ValueError: If the phone number is not in the right format
+            ValueError: If the phone number or the email is not in the right format
         '''
         if not isinstance(firstName, str):
             raise TypeError("The first name is not a string.")
