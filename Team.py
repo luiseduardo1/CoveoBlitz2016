@@ -135,7 +135,7 @@ class ResponseWriter:
     self.team = team
     self.matchedParagraphs = []
 
-    def parse_request(self, request):
+    def parseRequest(self, request):
         '''Parses the request and gets the matched paragraphs indexes
 
         Args:
@@ -148,11 +148,11 @@ class ResponseWriter:
         '''
         if not isinstance(request, dict):
             raise TypeError("The request is not a dictionary.")
-        matching_string = request['q'].lower()
+        matchingString = request['q'].lower()
         paragraphs = request['paragraphs']
         
         for index, paragraph in paragraphs.items():
-            if matching_string in paragraph.lower():
+            if matchingString in paragraph.lower():
                 self.matchedParagraphs.append(int(index))
 
     def __serializableRepresentation(self):
