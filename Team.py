@@ -2,7 +2,7 @@ import datetime
 import re
 
 class TeamMember:
-    '''A team member
+    '''A team member according to the Coveo Blitz specifications
     
     Attributes:
         first_name (string): The first name of the team member
@@ -23,7 +23,7 @@ class TeamMember:
                  study_program, 
                  date_program_end, 
                  in_charge=False):
-        '''Constructor of the class
+        '''Constructor 
 
         Args:
             first_name (string): The first name of the team member
@@ -33,7 +33,7 @@ class TeamMember:
             educational_establishment (string): The name of the school of the team member
             study_program (string): The program in which the team member study
             date_program_end (datetime): The ending date of the study program
-            in_charge (bool): Specifies if the team member is in charge of the team
+            in_charge (bool) (default: False): Specifies if the team member is in charge of the team 
 
         Raises:
             TypeError: If any of the arguments do not conform to their specified types
@@ -65,3 +65,50 @@ class TeamMember:
         self.study_program = study_program
         self.date_program_end = date_program_end
         self.in_charge = in_charge
+
+class Team:
+    '''A team according to the Coveo Blitz specification
+
+    Attributes:
+        team_name (string): The name of the team
+        team_members (list<TeamMember>): A list of the team members
+    '''
+    def __init__(self,
+                 team_name,
+                 team_members=[])
+    '''Constructor
+
+    Args:
+        team_name (string): The name of the team
+        team_members (list<TeamMember> or TeamMember) (default: []): The team member(s)
+
+    Raises:
+        TypeError: If the arguments do not respect their specified types
+    '''
+    if not isinstance(team_name, str):
+        raise TypeError("The team name is not a string.")
+    if not isinstance(team_members, list) or not isinstance(team_members, TeamMember):
+        raise TypeError("The team member(s) is not a list or a TeamMember.")
+    self.team_name = team_name
+    self.team_members = team_members
+
+class ResponseWriter:
+    '''The response of the server in a JSON format for the Coveo Blitz competition entry
+
+    Attributes:
+        team (Team): The team that wants to enter the competition
+        matched_paragraphs (list<int>): The paragraphs that contain the specified string
+    '''
+    def __init__(self, team):
+    '''Constructor
+
+    Args:
+        team (Team): The team that wants to enter the competition
+    
+    Raises:
+        TypeError: If the team argument is not a Team.
+    '''
+    if not isinstance(team, Team):
+        raise TypeError("The team is not a Team object.")
+    self.team = team
+    self.matchedParagraph = []
