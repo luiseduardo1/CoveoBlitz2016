@@ -166,4 +166,9 @@ class ResponseWriter:
         return representation
 
     def serializeJSON(self):
+    '''Serialize the instance as JSON
+
+    Returns:
+        The serialized instance
+    '''
         return json.dump(self.__serializableRepresentation())
