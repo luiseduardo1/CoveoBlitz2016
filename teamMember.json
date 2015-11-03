@@ -1,0 +1,12 @@
+[
+    {
+        "firstName" : "Antoine",
+        "lastName" : "Gagné",
+        "email" : "antoine.gagne.2@ulaval.ca",
+        "phoneNumber" : "581-996-7374",
+        "educationalEstablishment" : "Université Laval",
+        "studyProgram" : "Génie logiciel",
+        "dateProgramEnd" : "20/4/2018",
+        "inCharge" : false
+    }
+]

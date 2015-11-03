@@ -90,8 +90,8 @@ class Team:
         '''
         if not isinstance(teamName, str):
             raise TypeError("The team name is not a string.")
-        if not isinstance(teamMembers, list) or not isinstance(teamMembers, TeamMember):
-            raise TypeError("The team member(s) is not a list or a TeamMember.")
+        #if not isinstance(teamMembers, list) or not isinstance(teamMembers, TeamMember):
+        #    raise TypeError("The team member(s) is not a list or a TeamMember.")
         self.teamName = teamName
         self.teamMembers = teamMembers
 
@@ -163,4 +163,37 @@ class ResponseWriter:
         Returns:
             The serialized instance
         '''
-        return json.dump(self.__serializableRepresentation())
+        return json.dumps(self.__serializableRepresentation())
+
+def createResponseWriter(JSONFile="teamMember.json"):
+    '''Create a ResponseWriter instance by reading a JSON file
+
+    Args:
+        JSONFile (string): The JSON file in which the program will read the team members
+
+    Returns:
+        The newly created ResponseWriter instance
+    '''
+    team = Team("Random Name")
+    with open(JSONFile, 'r', encoding="utf8") as membersFile:
+        teamMembers = json.load(membersFile)
+        for member in teamMembers:
+            endDate = member['dateProgramEnd']
+            endDate = endDate.split('/')
+            teamMember = TeamMember(member['firstName'],
+                                    member['lastName'],
+                                    member['email'],
+                                    member['phoneNumber'],
+                                    member['educationalEstablishment'],
+                                    member['studyProgram'],
+                                    datetime.datetime(int(endDate[2]),
+                                                      int(endDate[1]),
+                                                      int(endDate[0])),
+                                    member['inCharge'])
+            team.teamMembers.append(teamMember)
+    return ResponseWriter(team)
+
+#To try the ResponseWriter methods:
+#   1- Uncomment the following code
+#   2- Write "python Team.py  | python -m json.tool" inside the terminal
+#print(createResponseWriter().serializeJSON())
