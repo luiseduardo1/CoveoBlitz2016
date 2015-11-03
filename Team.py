@@ -1,103 +1,125 @@
 import datetime
+import json
 import re
 
 class TeamMember:
     '''A team member according to the Coveo Blitz specifications
     
     Attributes:
-        first_name (string): The first name of the team member
-        last_name (string): The last name of the team member
+        firstName (string): The first name of the team member
+        lastName (string): The last name of the team member
         email (string): The email of the team member
-        phone_number (string): The phone number of the team member
-        educational_establishment (string): The name of the school of the team member
-        study_program (string): The program in which the team member study
-        date_program_end (int): The ending date of the study program
-        in_charge (bool): Specifies if the team member is in charge of the team
+        phoneNumber (string): The phone number of the team member
+        educationalEstablishment (string): The name of the school of the team member
+        studyProgram (string): The program in which the team member study
+        dateProgramEnd (float): The ending date of the study program
+        inCharge (bool): Specifies if the team member is in charge of the team
     '''
     def __init__(self, 
-                 first_name, 
-                 last_name, 
+                 firstName, 
+                 lastName, 
                  email, 
-                 phone_number, 
-                 educational_establishment, 
-                 study_program, 
-                 date_program_end, 
-                 in_charge=False):
+                 phoneNumber, 
+                 educationalEstablishment, 
+                 studyProgram, 
+                 dateProgramEnd, 
+                 inCharge=False):
         '''Constructor 
 
         Args:
-            first_name (string): The first name of the team member
-            last_name (string): The last name of the team member
+            firstName (string): The first name of the team member
+            lastName (string): The last name of the team member
             email (string): The email of the team member
-            phone_number (string): The phone number of the team member
-            educational_establishment (string): The name of the school of the team member
-            study_program (string): The program in which the team member study
-            date_program_end (datetime): The ending date of the study program
-            in_charge (bool) (default: False): Specifies if the team member is in charge of the team 
+            phoneNumber (string): The phone number of the team member
+            educationalEstablishment (string): The name of the school of the team member
+            studyProgram (string): The program in which the team member study
+            dateProgramEnd (datetime): The ending date of the study program
+            inCharge (bool) (default: False): Specifies if the team member is in charge of the team 
 
         Raises:
             TypeError: If any of the arguments do not conform to their specified types
             ValueError: If the phone number is not in the right format
         '''
-        if not isinstance(first_name, str):
+        if not isinstance(firstName, str):
             raise TypeError("The first name is not a string.")
-        if not isinstance(last_name, str):
+        if not isinstance(lastName, str):
             raise TypeError("The last name is not a string.")
         if not isinstance(email, str):
             raise TypeError("The email is not a string.")
-        if not isinstance(phone_number, str):
+        if not isinstance(phoneNumber, str):
             raise TypeError("The phone number is not a string.")
-        if not isinstance(educational_establishment, str):
+        if not isinstance(educationalEstablishment, str):
             raise TypeError("The educational establishment is not a string.")
-        if not isinstance(study_program, str):
+        if not isinstance(studyProgram, str):
             raise TypeError("The study program name is not a string.")
-        if not isinstance(date_program_end, datetime.datetime):
+        if not isinstance(dateProgramEnd, datetime.datetime):
             raise TypeError("The end date of the team member study program is not a datetime.")
-        if not isinstance(in_charge, bool):
-            raise TypeError("The in_charge variable is not a boolean.")
-        if not re.match("^(1 )?\d{3}-\d{3}-\d{4}( x\d{1,5})?$", phone_number):
+        if not isinstance(inCharge, bool):
+            raise TypeError("The inCharge variable is not a boolean.")
+        if not re.match("^(1 )?\d{3}-\d{3}-\d{4}( x\d{1,5})?$", phoneNumber):
             raise ValueError("The phone number is not in a good format.")
-        self.first_name = first_name
-        self.last_name = last_name
+        if not re.match("^\w+@\w+\.\w+$", email):
+            raise ValueError("The email is not in a good format.")
+        self.firstName = firstName
+        self.lastName = lastName
         self.email = email
-        self.phone_number = phone_number
-        self.educational_establishment = educational_establishment
-        self.study_program = study_program
-        self.date_program_end = date_program_end
-        self.in_charge = in_charge
+        self.phoneNumber = phoneNumber
+        self.educationalEstablishment = educationalEstablishment
+        self.studyProgram = studyProgram
+        self.dateProgramEnd = dateProgramEnd.timestamp()
+        self.inCharge = inCharge
+
+    def serializableRepresentation(self):
+    '''Get a serializable representation of the instance
+
+    Returns:
+        A dictionary containing all the name of the attributes of the class as keys and their value.
+    '''
+        return self.__dict__
 
 class Team:
     '''A team according to the Coveo Blitz specification
 
     Attributes:
-        team_name (string): The name of the team
-        team_members (list<TeamMember>): A list of the team members
+        teamName (string): The name of the team
+        teamMembers (list<TeamMember>): A list of the team members
     '''
     def __init__(self,
-                 team_name,
-                 team_members=[])
+                 teamName,
+                 teamMembers=[])
     '''Constructor
 
     Args:
-        team_name (string): The name of the team
-        team_members (list<TeamMember> or TeamMember) (default: []): The team member(s)
+        teamName (string): The name of the team
+        teamMembers (list<TeamMember> or TeamMember) (default: []): The team member(s)
 
     Raises:
         TypeError: If the arguments do not respect their specified types
     '''
-    if not isinstance(team_name, str):
+    if not isinstance(teamName, str):
         raise TypeError("The team name is not a string.")
-    if not isinstance(team_members, list) or not isinstance(team_members, TeamMember):
+    if not isinstance(teamMembers, list) or not isinstance(teamMembers, TeamMember):
         raise TypeError("The team member(s) is not a list or a TeamMember.")
-    self.team_name = team_name
-    self.team_members = team_members
+    self.teamName = teamName
+    self.teamMembers = teamMembers
+
+    def serializableRepresentation(self):
+    '''Get a serializable representation of the instance
+
+    Returns:
+        A dictionary with the name of the attributes of the class as the keys and their values.
+    '''
+        return {
+                "teamName" : self.teamName,
+                "teamMembers" : [teamMember.serializableRepresentation() for teamMember in self.teamMembers]
+               }
 
 class ResponseWriter:
     '''The response of the server in a JSON format for the Coveo Blitz competition entry
 
     Attributes:
         team (Team): The team that wants to enter the competition
-        matched_paragraphs (list<int>): The paragraphs that contain the specified string
+        matchedParagraphs (list<int>): The paragraphs that contain the specified string
     '''
     def __init__(self, team):
     '''Constructor
@@ -111,7 +133,7 @@ class ResponseWriter:
     if not isinstance(team, Team):
         raise TypeError("The team is not a Team object.")
     self.team = team
-    self.matched_paragraph = []
+    self.matchedParagraphs = []
 
     def parse_request(self, request):
         '''Parses the request and gets the matched paragraphs indexes
@@ -126,9 +148,22 @@ class ResponseWriter:
         '''
         if not isinstance(request, dict):
             raise TypeError("The request is not a dictionary.")
-        matching_string = request['q']
+        matching_string = request['q'].lower()
         paragraphs = request['paragraphs']
         
         for index, paragraph in paragraphs.items():
-            if matching_string in paragraph:
-                self.matched_paragraph.append(int(index))
+            if matching_string in paragraph.lower():
+                self.matchedParagraphs.append(int(index))
+
+    def __serializableRepresentation(self):
+    '''Get a serializable representation of the instance
+
+    Returns:
+        A representation that is serializable
+    '''
+        representation = self.team.serializableRepresentation()
+        representation['matchedParagraphs'] = self.matchedParagraphs
+        return representation
+
+    def serializeJSON(self):
+        return json.dump(self.__serializableRepresentation())
