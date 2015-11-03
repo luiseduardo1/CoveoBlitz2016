@@ -111,7 +111,7 @@ class ResponseWriter:
     if not isinstance(team, Team):
         raise TypeError("The team is not a Team object.")
     self.team = team
-    self.matchedParagraph = []
+    self.matched_paragraph = []
 
     def parse_request(self, request):
         '''Parses the request and gets the matched paragraphs indexes
@@ -120,6 +120,15 @@ class ResponseWriter:
             request (dict<str, str>): A dictionary with the string to match 
                                         and the paragraphs in which to search 
                                         for the string
+
         Raises:
             TypeError: If request is not a dictionary.
         '''
+        if not isinstance(request, dict):
+            raise TypeError("The request is not a dictionary.")
+        matching_string = request['q']
+        paragraphs = request['paragraphs']
+        
+        for index, paragraph in paragraphs.items():
+            if matching_string in paragraph:
+                self.matched_paragraph.append(int(index))
