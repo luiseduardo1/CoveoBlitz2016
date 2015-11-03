@@ -70,11 +70,11 @@ class TeamMember:
         self.inCharge = inCharge
 
     def serializableRepresentation(self):
-    '''Get a serializable representation of the instance
+        '''Get a serializable representation of the instance
 
-    Returns:
-        A dictionary containing all the name of the attributes of the class as keys and their value.
-    '''
+        Returns:
+            A dictionary containing all the name of the attributes of the class as keys and their value.
+        '''
         return self.__dict__
 
 class Team:
@@ -87,28 +87,28 @@ class Team:
     def __init__(self,
                  teamName,
                  teamMembers=[])
-    '''Constructor
+        '''Constructor
 
-    Args:
-        teamName (string): The name of the team
-        teamMembers (list<TeamMember> or TeamMember) (default: []): The team member(s)
+        Args:
+            teamName (string): The name of the team
+            teamMembers (list<TeamMember> or TeamMember) (default: []): The team member(s)
 
-    Raises:
-        TypeError: If the arguments do not respect their specified types
-    '''
-    if not isinstance(teamName, str):
-        raise TypeError("The team name is not a string.")
-    if not isinstance(teamMembers, list) or not isinstance(teamMembers, TeamMember):
-        raise TypeError("The team member(s) is not a list or a TeamMember.")
-    self.teamName = teamName
-    self.teamMembers = teamMembers
+        Raises:
+            TypeError: If the arguments do not respect their specified types
+        '''
+        if not isinstance(teamName, str):
+            raise TypeError("The team name is not a string.")
+        if not isinstance(teamMembers, list) or not isinstance(teamMembers, TeamMember):
+            raise TypeError("The team member(s) is not a list or a TeamMember.")
+        self.teamName = teamName
+        self.teamMembers = teamMembers
 
     def serializableRepresentation(self):
-    '''Get a serializable representation of the instance
+        '''Get a serializable representation of the instance
 
-    Returns:
-        A dictionary with the name of the attributes of the class as the keys and their values.
-    '''
+        Returns:
+            A dictionary with the name of the attributes of the class as the keys and their values.
+        '''
         return {
                 "teamName" : self.teamName,
                 "teamMembers" : [teamMember.serializableRepresentation() for teamMember in self.teamMembers]
@@ -122,18 +122,18 @@ class ResponseWriter:
         matchedParagraphs (list<int>): The paragraphs that contain the specified string
     '''
     def __init__(self, team):
-    '''Constructor
+        '''Constructor
 
-    Args:
-        team (Team): The team that wants to enter the competition
-    
-    Raises:
-        TypeError: If the team argument is not a Team.
-    '''
-    if not isinstance(team, Team):
-        raise TypeError("The team is not a Team object.")
-    self.team = team
-    self.matchedParagraphs = []
+        Args:
+            team (Team): The team that wants to enter the competition
+        
+        Raises:
+            TypeError: If the team argument is not a Team.
+        '''
+        if not isinstance(team, Team):
+            raise TypeError("The team is not a Team object.")
+        self.team = team
+        self.matchedParagraphs = []
 
     def parseRequest(self, request):
         '''Parses the request and gets the matched paragraphs indexes
@@ -156,19 +156,19 @@ class ResponseWriter:
                 self.matchedParagraphs.append(int(index))
 
     def __serializableRepresentation(self):
-    '''Get a serializable representation of the instance
+        '''Get a serializable representation of the instance
 
-    Returns:
-        A representation that is serializable
-    '''
+        Returns:
+            A representation that is serializable
+        '''
         representation = self.team.serializableRepresentation()
         representation['matchedParagraphs'] = self.matchedParagraphs
         return representation
 
     def serializeJSON(self):
-    '''Serialize the instance as JSON
+        '''Serialize the instance as JSON
 
-    Returns:
-        The serialized instance
-    '''
+        Returns:
+            The serialized instance
+        '''
         return json.dump(self.__serializableRepresentation())
