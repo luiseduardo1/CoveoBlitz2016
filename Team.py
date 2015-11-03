@@ -69,14 +69,6 @@ class TeamMember:
         self.dateProgramEnd = dateProgramEnd.timestamp()
         self.inCharge = inCharge
 
-    def serializableRepresentation(self):
-        '''Get a serializable representation of the instance
-
-        Returns:
-            A dictionary containing all the name of the attributes of the class as keys and their value.
-        '''
-        return self.__dict__
-
 class Team:
     '''A team according to the Coveo Blitz specification
 
@@ -111,7 +103,7 @@ class Team:
         '''
         return {
                 "teamName" : self.teamName,
-                "teamMembers" : [teamMember.serializableRepresentation() for teamMember in self.teamMembers]
+                "teamMembers" : [teamMember.__dict__ for teamMember in self.teamMembers]
                }
 
 class ResponseWriter:
