@@ -112,3 +112,14 @@ class ResponseWriter:
         raise TypeError("The team is not a Team object.")
     self.team = team
     self.matchedParagraph = []
+
+    def parse_JSON(self, json_file):
+        '''Parses the JSON file and gets the matched paragraphs indexes
+
+        Args:
+            json_file (dict<str, str>): A dictionary with the string to match 
+                                        and the paragraphs in which to search 
+                                        for the string
+        Raises:
+            TypeError: If json_file is not a dictionary.
+        '''
