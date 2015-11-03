@@ -58,7 +58,7 @@ class TeamMember:
             raise TypeError("The inCharge variable is not a boolean.")
         if not re.match("^(1 )?\d{3}-\d{3}-\d{4}( x\d{1,5})?$", phoneNumber):
             raise ValueError("The phone number is not in a good format.")
-        if not re.match("^\w+@\w+\.\w+$", email):
+        if not re.match("^(\w+(\.)?)+(\d+)?@\w+\.\w+$", email):
             raise ValueError("The email is not in a good format.")
         self.firstName = firstName
         self.lastName = lastName
