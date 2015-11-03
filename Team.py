@@ -113,13 +113,13 @@ class ResponseWriter:
     self.team = team
     self.matchedParagraph = []
 
-    def parse_JSON(self, json_file):
-        '''Parses the JSON file and gets the matched paragraphs indexes
+    def parse_request(self, request):
+        '''Parses the request and gets the matched paragraphs indexes
 
         Args:
-            json_file (dict<str, str>): A dictionary with the string to match 
+            request (dict<str, str>): A dictionary with the string to match 
                                         and the paragraphs in which to search 
                                         for the string
         Raises:
-            TypeError: If json_file is not a dictionary.
+            TypeError: If request is not a dictionary.
         '''
