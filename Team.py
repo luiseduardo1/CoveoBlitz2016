@@ -1,3 +1,6 @@
+#!../bin/env python
+
+from flask import jsonify
 import datetime
 import json
 import re
@@ -58,7 +61,7 @@ class TeamMember:
             raise TypeError("The inCharge variable is not a boolean.")
         if not re.match("^(1 )?\d{3}-\d{3}-\d{4}( x\d{1,5})?$", phoneNumber):
             raise ValueError("The phone number is not in a good format.")
-        if not re.match("^(\w+(\.)?)+(\d+)?@\w+\.\w+$", email):
+        if not re.match("^(\w+(\.|\-)?)+(\d+)?@\w+\.\w+$", email):
             raise ValueError("The email is not in a good format.")
         self.firstName = firstName
         self.lastName = lastName
@@ -163,7 +166,7 @@ class ResponseWriter:
         Returns:
             The serialized instance
         '''
-        return json.dumps(self.__serializableRepresentation())
+        return (self.__serializableRepresentation())
 
 def createResponseWriter(JSONFile="teamMember.json"):
     '''Create a ResponseWriter instance by reading a JSON file
@@ -174,8 +177,8 @@ def createResponseWriter(JSONFile="teamMember.json"):
     Returns:
         The newly created ResponseWriter instance
     '''
-    team = Team("Random Name")
-    with open(JSONFile, 'r', encoding="utf8") as membersFile:
+    team = Team("Beautiful Brown")
+    with open(JSONFile, 'r' ) as membersFile:
         teamMembers = json.load(membersFile)
         for member in teamMembers:
             endDate = member['dateProgramEnd']
@@ -193,7 +196,3 @@ def createResponseWriter(JSONFile="teamMember.json"):
             team.teamMembers.append(teamMember)
     return ResponseWriter(team)
 
-#To try the ResponseWriter methods:
-#   1- Uncomment the following code
-#   2- Write "python Team.py  | python -m json.tool" inside the terminal
-#print(createResponseWriter().serializeJSON())

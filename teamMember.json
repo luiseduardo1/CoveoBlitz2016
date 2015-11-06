@@ -8,5 +8,15 @@
         "studyProgram" : "Génie logiciel",
         "dateProgramEnd" : "20/4/2018",
         "inCharge" : false
+    },
+    {
+        "firstName" : "Luis Eduardo",
+        "lastName" : "Obando",
+        "email" : "luis-eduardo.obando-carbajal.1@ulaval.ca",
+        "phoneNumber" : "418-717-5847",
+        "educationalEstablishment" : "Université Laval",
+        "studyProgram" : "Génie logiciel",
+        "dateProgramEnd" : "20/4/2018",
+        "inCharge" : true
     }
 ]
