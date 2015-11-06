@@ -168,7 +168,7 @@ class ResponseWriter:
         '''
         return (self.__serializableRepresentation())
 
-def createResponseWriter(JSONFile="teamMember.json"):
+def createResponseWriter(JSONFile="/home/luiseduardo1/mysite/teamMember.json"):
     '''Create a ResponseWriter instance by reading a JSON file
 
     Args:
