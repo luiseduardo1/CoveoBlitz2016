@@ -18,5 +18,15 @@
         "studyProgram" : "Génie logiciel",
         "dateProgramEnd" : "20/4/2018",
         "inCharge" : true
+    },
+    {
+      "firstName" : "Alexandre",
+      "lastName" : "Gingras-Courchesne",
+      "email" : "alexandre.gingras-courchesne.1@ulaval.ca",
+      "phoneNumber" : "418-446-8063",
+      "educationEstablishment" : "Université Laval",
+      "studyProgram" : "Génie informatique",
+      "dateProgramEnd" : "20/4/2018",
+      "inCharge" : false
     }
 ]
