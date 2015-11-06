@@ -28,5 +28,15 @@
         "studyProgram" : "Génie informatique",
         "dateProgramEnd" : "20/4/2018",
         "inCharge" : false
+    },
+    {
+        "firstName" : "Marc-Antoine",
+        "lastName" : "Fortier",
+        "email" : "marc-antoine.fortier.4@ulaval.ca",
+        "phoneNumber" : "581-982-8078",
+        "educationEstablishment" : "Université Laval",
+        "studyProgram" : "Baccalauréat en Informatique",
+        "dateProgramEnd" : "20/4/2017",
+        "inCharge" : false
     }
 ]
