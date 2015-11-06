@@ -1,6 +1,5 @@
 #!../bin/env python
 
-from flask import jsonify
 import datetime
 import json
 import re
